@@ -1,28 +1,47 @@
-import pytest
-# TODO: add necessary import
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
 
-# TODO: implement the first test. Change the function name and input as needed
-def test_one():
-    """
-    # add description for the first test
-    """
-    # Your code here
-    pass
+from ml.model import (
+    compute_model_metrics,
+    inference,
+    train_model,
+)
 
 
-# TODO: implement the second test. Change the function name and input as needed
-def test_two():
+def test_train_model():
     """
-    # add description for the second test
+    Test that train_model returns a RandomForestClassifier.
     """
-    # Your code here
-    pass
+    X = np.array([[1, 2], [2, 3], [3, 4], [4, 5]])
+    y = np.array([0, 0, 1, 1])
+
+    model = train_model(X, y)
+
+    assert isinstance(model, RandomForestClassifier)
 
 
-# TODO: implement the third test. Change the function name and input as needed
-def test_three():
+def test_inference():
     """
-    # add description for the third test
+    Test that inference returns the expected number of predictions.
     """
-    # Your code here
-    pass
+    X = np.array([[1, 2], [2, 3], [3, 4], [4, 5]])
+    y = np.array([0, 0, 1, 1])
+
+    model = train_model(X, y)
+    preds = inference(model, X)
+
+    assert len(preds) == len(y)
+
+
+def test_compute_model_metrics():
+    """
+    Test that model metrics return the expected values.
+    """
+    y = np.array([1, 1, 0, 0])
+    preds = np.array([1, 1, 0, 0])
+
+    precision, recall, fbeta = compute_model_metrics(y, preds)
+
+    assert precision == 1.0
+    assert recall == 1.0
+    assert fbeta == 1.0
